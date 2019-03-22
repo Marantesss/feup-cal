@@ -9,4 +9,14 @@ TP3/cute/
 TP3/Debug/
 TP3/.*
 TP3/*.xml
+TP4/boost/
+TP4/cute/
+TP4/Debug/
+TP4/.*
+TP4/*.xml
+TP5/boost/
+TP5/cute/
+TP5/Debug/
+TP5/.*
+TP5/*.xml
 

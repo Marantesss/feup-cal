@@ -206,7 +206,6 @@ bool Graph<T>::removeVertex(const T &in) {
 		}
 	}
 	return false;
-
 }
 
 

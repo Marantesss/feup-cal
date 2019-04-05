@@ -19,4 +19,14 @@ TP5/cute/
 TP5/Debug/
 TP5/.*
 TP5/*.xml
+TP6/boost/
+TP6/cute/
+TP6/Debug/
+TP6/.*
+TP6/*.xml
+TP7/boost/
+TP7/cute/
+TP7/Debug/
+TP7/.*
+TP7/*.xml
 

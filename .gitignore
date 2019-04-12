@@ -29,4 +29,9 @@ TP7/cute/
 TP7/Debug/
 TP7/.*
 TP7/*.xml
+TP8/boost/
+TP8/cute/
+TP8/Debug/
+TP8/.*
+TP8/*.xml
 

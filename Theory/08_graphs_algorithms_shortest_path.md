@@ -1,5 +1,7 @@
 # Graph Algorithms - Shortest Path
 
+# Shortest Path Between one vertice and all others
+
 ## Problem
  - Given a **weighted graph** `G = (V, E)` and a vertice `s`, we need to obtain the "shortest" path (minimal total weight) from `s` to **every other vertice** in `G`
 
@@ -83,8 +85,8 @@ DIJKSTRA(G, s): // G=(V,E), s  V
         v ← EXTRACT-MIN(Q) // greedy
         for each w ∈ Adj(v) do
             if dist(w) > dist(v) + weight(v,w) then
-                dist(w)  dist(v)+ weight(v,w)
-                path(w)  v
+                dist(w) ← dist(v)+ weight(v,w)
+                path(w) ← v
                 if w !∈ Q then // old dist(w) was infinite
                     INSERT(Q, (w, dist(w)))
                 else
@@ -100,3 +102,76 @@ DIJKSTRA(G, s): // G=(V,E), s  V
     1. Sequentially search the object array which key we want to change: O(n)
     2. Go up (or down) the object in the tree until we have reestablished the tree's invariation (each node lesser or equal then its children): O(log n)
  - **Updated Method**: *O(log n)*
+    - Each object placed on the `heap` stores its position (index) in the array
+    - So we no longer need step 1. making the total time O(log n)
+    - It also introduces a bit of **overhead** in insertion and deletion operations (When an object is inserted/moved, its index has to be updated)
+ - **Optimized Method**: *O(1)*
+    - With **Fibonacci Heaps** we can do `DECREASE-KEY` in total time O(1)
+
+### Dijkstra Algorithm Efficiency
+
+ - **Execution time** is:
+    - O( |V| + |E| + |V| * log|V| + |E| * log |V| ) **OR**
+    - O( (|V| + |E|) * log|V| )
+ - O( |V| * log|V| ) - insertion and extraction in `priority queue`
+    - `|V|` - number of extractions
+    - Each operation like this can be made in logarithmic time
+ - O( |E| * log|V| ) - `DECREASE KEY`
+    - Done max `|E|` times (once per edge)
+    - Each operation like this can be made in logarithmic time
+ - Can be optimized to O( |V| * log(V) ) with **Fibonacci Heaps**
+
+## Negative Weighted directed graph case
+
+ - In this case there may be the need to process each vertice more than once
+ - If there are any loops with negative weight, **the problem has no solution**
+ - The problem is solveable with total time O(|V| * |E|) using **Bellman-Ford Algorithm** 
+
+<img src="images/graph_algorithms_shortest_path_weighted_negative_impossible.png" width="500"><br>
+
+### Pseudo-Code
+
+```
+BELLMAN-FORD(G, s): // G=(V,E), s  V
+    for each v ∈ V do
+        dist(v) ← infinite
+        path(v) ← nil
+    dist(s) ← 0
+    for i = 1 to |V|-1 do
+        for each (v, w) ∈ E do
+            if dist(w) > dist(v) + weight(v,w) then
+                dist(w) ← dist(v)+ weight(v,w)
+                path(w) ← v
+    for each (v, w) ∈ E do
+        if dist(v) + weight(v,w) < dist(w) then
+            fail("there are cycles of negative weight")
+```
+
+<img src="images/graph_algorithms_shortest_path_weighted_negative.png" width="500"><br>
+
+### Bellman-Ford Algorithm Analysis
+
+ - In each iteration `i`, the algorithm processes all edges e guarantees that it finds all the shortest paths with up to `i` edges. (possibly even longer - main loop invariation)
+ - Since the **longest possible no loop path** has |V|-1 edges, we only need to execute max |V| - 1 main loop iterations to ensure that all shortest paths are found
+ - In the end we execute one more iteration to check if any distance can be even shorter. If that's the case, it means that there is a shorter path with |V| edges, which can happen only if we have at leat one negative weight loop
+ - **Time Complexity**: O(|V| * |E|)
+
+## DAG - Directed Acyclic Graphs
+
+ - **Dijkstra Algorithm** simplified:
+    - Process all vertices in **topological order**
+    - Enough to verify that a processed vertice can no longer be changed, because there are no more 'new' edges
+    - We can **combine** topological order with updating ditances and paths in a single swoop
+    - **Execution Time** is the same as the topological order: *O(|V| + |E|)*
+
+ - **Applications**
+    - Irreversible Processes:
+        - We can't go back to a certain state (Chemical reactions)
+    - Product Management:
+        - Project composed of activities with acyclical precedences
+
+<img src="images/graph_algorithms_shortest_path_dag.png" width="500"><br>
+
+# Shortest Path Between 2 vertices
+
+ - There is no known algorithm more efficient

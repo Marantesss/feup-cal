@@ -14,7 +14,7 @@ Graph `G = (V, E)`
 
 <img src="images/graph_directed_not-directed.png" width="500"><br>
 
-## Routes
+## Routes/Paths
 
  - A **route** is a sequence of vertices `v1, v2, ..., vn` such that `(vi, vi+1) ∈ E, 1 <= i < n`
  - route **length** is equal to **number of edges**, n-1

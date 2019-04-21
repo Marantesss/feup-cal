@@ -179,4 +179,66 @@ BELLMAN-FORD(G, s): // G=(V,E), s  V
  - **Optimization**: Stop after processing the destination vertice
     - In a road map, this is not very efficient for long distances :(
 
-## 
+## Regular Method
+
+ - **Road network** can be represented by a directed graph, in which:
+    - **Vertices** represent intersections
+    - **Edges** repredent roads (one way)
+    - **Weights** represent distances, times, costs, etc.
+ - Dijkstra Algorithm is the base for finding the shortest route between 2 vertices `(s and t)`, stoping when the next processed node is `t`
+ - Since the algorithm processes vertices **from smallest to largest distance until we have reached the destination node**, we can inspect a **circle** around `s` of radius equals to the distance between `s` and `t`
+
+## Optimization
+
+ - Road maps are huge
+    - 17 european countries map from *DIMACS* has about *19e6* vertices and *23e6* edges
+    - in 2018 *Opean Street Maps* had about *4.3e9*
+ - Dijkstra's Algorithm can take as long as many minutes to process long distances
+ - Optimizations that don't require any pre-processing can **save 10 times more time**
+ - With pre-processing, we can **save between 10^3 and 10^6 times more time**, reduzing search time to *ms*
+
+## Bidirectional Search
+
+ - Execute Dijkstra's Algorithm from `s` to `t` and also from `t` to `s`, switching between the 2
+ - Terminate when a processed vertice was already processed from the opposite direction
+ - Keep the distance `u` (shortest known path) between `s` and `t`
+    - processing edge `(v, w)` such that `w` was already previously processed from the opposite direction
+    - verify if the corresponding path `s` - `t` is shorted than `u`
+
+<img src="images/graph_algorithms_shortest_path_bidirectional_dijkstra.png" width="500"><br>
+
+## Oriented Search
+
+ - **A\* Algorithm**: choose to process vertice `v` with minimum value of `dsv` + `πvt`, stoping when vertice `t` is going to be precessed
+    - **`dsv`** - minimum distance from `s` to `t` (Dijkstra's Algorithm)
+    - **`πvt`** - extimation below minimum distance from `v` to `t` (potencial function)
+ - Generally, does not guarantee the optimum
+ - In some cases, it does
+    - Edges' weight is in *km*
+    - `π` is the Euclidian distance (straight line) from `v` to `t`
+    - Same as applying Dijkstra's Algorithm with modified edge weights: `w’uv = wuv - πut + πvt`, adding `πst` to the obtained shortest distance from `s` to `t`
+    - Can be combined with **bidirectional search**
+    - **Speedup** in practice is moderate
+
+<img src="images/graph_algorithms_shortest_path_oriented_dijkstra.png" width="500"><br>
+
+## Highway Networks
+
+ - **Pre-processing** decomposes the original network in hierarchy levels:
+    - Example: City Streets Map and Road Maps
+    - An edge `(u, v)` is automaticly classified as **highway edge** if there exists at least a pais of vertices `s` and `t` of the network that:
+        1. The shortest path from `s` to `t` goes through `(u, v)`
+        2. `u` is more than *H* vertices away from `s`
+        3. `v` is more than *H* vertices away from `t`
+    - *H* is a programmable value (for example, 40)
+    - Applicable to higher levels (local, highway, super-highway, etc)
+    - Pre-processment of the **USA Map** or **Western Europe Map** can be done in about **15 minutes**
+ -  The search is **bidirectional** and uses **most dense network** closest to `s` and `t` and **sparse** furthest from `s` and `t`
+ - Search is done in about *1ms* time
+ - It demands few aditional space, one field per edge
+
+<img src="images/graph_algorithms_shortest_path_highway_networks.png" width="500"><br>
+
+## Transit Nodes
+
+ - hellooo :)

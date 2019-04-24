@@ -239,4 +239,37 @@ BELLMAN-FORD(G, s): // G=(V,E), s  V
 
 ## Transit Nodes
 
- - hellooo :)
+ - Pre-processing determines
+   - **Transit Nodes**: Nodes/vertices such that the shortest path between any 2 "not very close" network nodes has to contain **at least one** of the transit nodes
+      - **Example**: Highway Access
+      - There are about 10^4 transit nodes in West Europe and USA
+      - Stored in a distance table between all transit nodes
+   - **Access Nodes**: For each Network Node, these are the closest transit nodes
+      - Tipically there are 10 Access Nodes for each Network Node
+      - For each Network Node, the Access Nodes and distances are stored in a table
+      - Two sets of Access Nodes: **Exit Nodes** and **Entry Nodes**
+ - The shortest path search  between two nodes is reduzed to only a few *table lookups*, which is then made in about 10µs
+ - Aditional significant storage space required
+   - Obtain **Access Nodes** from starting node `s` and arrival node `t`
+   - For each pair (**Exit Node** `u` and **Entry Node** `v`), obtain distance from `s` to `t` in 3 *table lookups*
+
+<img src="images/graph_algorithms_shortest_path_transit_nodes.png" width="500"><br>
+
+# Shortest path between all pairs of vertices
+
+ - Relevant for **road map pre-processing**
+ - Dijktra's Algorithm (greedy) repeated execution: `O(|V| (|V|+|E|) log|V|)`
+   - Good if the *graph is sparse* `(|E| ~ |V|)`, like *network raods*
+ - **Floyd-Warshall Algorith** (Dynamic Programming `O(|V|^3))`
+   - Better for more *dense graphs*
+   - Overall better since the code is much simpler
+   - Based on weighted **Adjacency Matrix W[i, j]** (infinit when there is no edge, 0 when i = j)
+   - Calculates **Minimal Distance Matrix D[i, j]** and **Shortest Path from i to j Predecessor Matrix P[i, j]**
+ - **Main Loop Invariation**: for each iteration k (from 0 to |V|), D[i, j] has the minimal distance from vertice i to j, using just intermediate nodes set {1, ..., k}
+ - **Initialization** (k = 0):
+   - D[i, j] (0) = W[i,j]
+   - P[i, j] (0) = nil
+ - **Recurrence** (k=1, ..., |V|):
+   - D[i,j] (k) = min( D[i,j] (k-1), D[i,k] (k-1) + D[k,j] (k-1))
+   - Valor de P[i,j] (k) é atualizado conforme o termo mínimo escolhido
+ - To **minimize memory**, we can **update the matrix** for each iteration k, instead of creating a new one

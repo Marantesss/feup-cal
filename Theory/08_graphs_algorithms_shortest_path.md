@@ -174,8 +174,10 @@ BELLMAN-FORD(G, s): // G=(V,E), s  V
 
 # Shortest Path Between 2 vertices
 
- - There is no known algorithm more efficient
-
+ - There is no known algorithm more efficient to solve this problem than **the most general case** (from 1 vertice to all others)
+ - So we need to find the **shortest path from the origin vertice to all others**, and **then select the detination vertice**
+ - **Optimization**: Stop after processing the destination vertice
+    - In a road map, this is not very efficient for long distances :(
 
 ## Regular Method
 

@@ -59,7 +59,9 @@ void findArt( Vertex v) {
  - Each obtained tree is a strongly connected component, that is, from any node we can reach any other node
 
 **Proof**
- - WHAT THE FUCK
+ - same component -> same spanning tree
+     - two nodes `v` and `w` are in the same component, there is a route from `v`to `w` e `w` to `v` in `G` and in `Gr`, so if `v` and `w` do not belong in the same spanning tree, they do not belong in the smae component
+ - same spanning tree -> same component
 
 ### Spanning Trees
 

@@ -19,7 +19,7 @@
         - `AAAAAAAAAA` → `*A10`
         - `AABBBBBBBBAMMKKKKKKKKKM` → `AA*B8AMM*K9M`
 
-## Huffman codes
+## [Huffman Coding](https://www.youtube.com/watch?v=0kNXhFIEd_w)
 
 ### Constant Codification
 

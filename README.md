@@ -10,7 +10,7 @@ All the course's information can be viewed [here](https://sigarra.up.pt/feup/pt/
 
 All the course's content can only be accessed through Moodle.
 
-However I've made my own notes for this course. They can be viewed [here](https://github.com/Marantesss/feup-cal/Theory)
+However I've made my own notes for this course. They can be viewed [here](https://github.com/Marantesss/feup-cal/tree/master/Theory)
 
 ## Authors
 
